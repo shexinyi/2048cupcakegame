@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Play the delicious 2048 Cupcake Game online! Combine cupcakes to reach the ultimate 2048 cupcake. Free to play on 2048cupcakegame.xyz">
+    <meta name="keywords" content="2048 cupcake game, cupcake game, 2048 game, puzzle game, online game, free game">
+    <title>2048 Cupcake Game - Combine Delicious Cupcakes | 2048cupcakegame.xyz</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+    <!-- Open Graph tags for social sharing -->
+    <meta property="og:title" content="2048 Cupcake Game - Sweet Puzzle Challenge">
+    <meta property="og:description" content="Play the delicious 2048 Cupcake Game online! Combine cupcakes to reach the ultimate 2048 cupcake.">
+    <meta property="og:image" content="https://2048cupcakegame.xyz/images/og-image.jpg">
+    <meta property="og:url" content="https://2048cupcakegame.xyz">
+    <meta property="og:type" content="website">
+    <!-- Structured data for rich snippets -->
+    <script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "Game",
+        "name": "2048 Cupcake Game",
+        "description": "A delicious version of the classic 2048 game featuring cupcakes. Combine identical cupcakes to create even more delicious treats!",
+        "url": "https://2048cupcakegame.xyz",
+        "image": "https://2048cupcakegame.xyz/images/og-image.jpg",
+        "genre": ["Puzzle", "Strategy", "Casual"],
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD",
+            "availability": "http://schema.org/InStock"
+        }
+    }
+    </script>
+</head>
+<body>
+    <header>
+        <h1>2048 Cupcake Game</h1>
+        <div class="score-container">
+            <div class="score-box">
+                <span class="score-label">分数</span>
+                <span id="score">0</span>
+            </div>
+            <div class="score-box">
+                <span class="score-label">最高分</span>
+                <span id="best-score">0</span>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="game-container">
+            <div class="game-message">
+                <p></p>
+                <div class="lower">
+                    <a class="retry-button">再来一次</a>
+                </div>
+            </div>
+            <div class="grid-container">
+                <div class="grid-row">
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                </div>
+                <div class="grid-row">
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                </div>
+                <div class="grid-row">
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                </div>
+                <div class="grid-row">
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                </div>
+            </div>
+            <div class="tile-container"></div>
+        </div>
+
+        <div class="game-controls">
+            <button id="new-game-button">新游戏</button>
+            <button id="how-to-play-button">游戏说明</button>
+        </div>
+
+        <div class="how-to-play">
+            <h2>如何玩 2048 Cupcake Game</h2>
+            <p>使用 <strong>方向键</strong> 或 <strong>滑动</strong>（在移动设备上）移动纸杯蛋糕。</p>
+            <p>当两个相同的纸杯蛋糕碰到一起时，它们会合并成一个更美味的纸杯蛋糕！</p>
+            <p>合并纸杯蛋糕，尝试创建终极的2048纸杯蛋糕！</p>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 <a href="https://2048cupcakegame.xyz">2048cupcakegame.xyz</a> - 所有权利保留</p>
+        <p>一个美味的2048游戏版本，充满了甜蜜的纸杯蛋糕！</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
