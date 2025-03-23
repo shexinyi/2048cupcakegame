@@ -55,11 +55,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     x: cell.x,
                     y: cell.y,
                     value: value,
-                    merged: false
+                    merged: false,
+                    isNew: true // 标记为新方块
                 };
                 
                 this.grid[cell.x][cell.y] = tile;
-                this.addTileElement(tile);
             }
         }
         
@@ -208,11 +208,11 @@ document.addEventListener('DOMContentLoaded', function() {
         move(dx, dy) {
             if (this.over && !this.keepPlaying) return;
             
+            // 标记所有现有方块为非新方块
+            this.markTilesOld();
+            
             let moved = false;
             const traversals = this.buildTraversals(dx, dy);
-            
-            // 保存当前状态
-            const previousGrid = JSON.parse(JSON.stringify(this.grid));
             
             // 清除合并标记
             this.prepareTiles();
@@ -232,7 +232,8 @@ document.addEventListener('DOMContentLoaded', function() {
                                 x: positions.next.x,
                                 y: positions.next.y,
                                 value: tile.value * 2,
-                                merged: true
+                                merged: true,
+                                isNew: false
                             };
                             
                             this.grid[positions.next.x][positions.next.y] = merged;
@@ -264,10 +265,142 @@ document.addEventListener('DOMContentLoaded', function() {
                 this.addRandomTile();
                 this.renderGrid();
                 
-                // 检查游戏是否结束
                 if (!this.movesAvailable()) {
                     this.over = true;
                     this.showMessage(false);
+                }
+            }
+        }
+        
+        // 渲染网格
+        // 修改渲染网格方法，避免不必要的重新创建元素
+        renderGrid() {
+        // 清空容器前先保存所有现有元素的引用
+        const oldTiles = Array.from(this.tileContainer.children);
+        const tileMap = new Map(); // 用于存储现有tile元素
+        
+        // 清空容器
+        this.clearTiles();
+        
+        // 渲染所有tile
+        for (let x = 0; x < this.gridSize; x++) {
+            for (let y = 0; y < this.gridSize; y++) {
+                const tile = this.grid[x][y];
+                
+                if (tile) {
+                    const element = document.createElement('div');
+                    element.classList.add('tile', `tile-${tile.value}`);
+                    
+                    // 添加适当的动画类
+                    if (tile.merged) {
+                        element.classList.add('tile-merged');
+                    } else if (tile.isNew) {
+                        element.classList.add('tile-new');
+                    }
+                    
+                    // 设置位置
+                    element.style.top = `${this.getTilePosition(x)}px`;
+                    element.style.left = `${this.getTilePosition(y)}px`;
+                    
+                    this.tileContainer.appendChild(element);
+                }
+            }
+        }
+        }
+        
+        // 修改添加随机方块方法，标记新方块
+        addRandomTile() {
+            if (this.availableCells().length > 0) {
+                const value = Math.random() < 0.9 ? 2 : 4;
+                const cell = this.randomAvailableCell();
+                
+                const tile = {
+                    x: cell.x,
+                    y: cell.y,
+                    value: value,
+                    merged: false,
+                    isNew: true // 标记为新方块
+                };
+                
+                this.grid[cell.x][cell.y] = tile;
+            }
+        }
+        
+        // 修改移动方法，确保动画流畅
+        move(dx, dy) {
+            if (this.over && !this.keepPlaying) return;
+            
+            // 标记所有现有方块为非新方块
+            this.markTilesOld();
+            
+            let moved = false;
+            const traversals = this.buildTraversals(dx, dy);
+            
+            // 清除合并标记
+            this.prepareTiles();
+            
+            // 遍历网格
+            traversals.x.forEach(x => {
+                traversals.y.forEach(y => {
+                    const tile = this.grid[x][y];
+                    
+                    if (tile) {
+                        const positions = this.findFarthestPosition({ x, y }, dx, dy);
+                        const next = this.grid[positions.next.x][positions.next.y];
+                        
+                        // 合并方块
+                        if (next && next.value === tile.value && !next.merged) {
+                            const merged = {
+                                x: positions.next.x,
+                                y: positions.next.y,
+                                value: tile.value * 2,
+                                merged: true,
+                                isNew: false
+                            };
+                            
+                            this.grid[positions.next.x][positions.next.y] = merged;
+                            this.grid[x][y] = null;
+                            
+                            // 更新分数
+                            this.updateScore(this.score + merged.value);
+                            
+                            // 检查是否获胜
+                            if (merged.value === 2048 && !this.won) {
+                                this.won = true;
+                                this.showMessage(true);
+                            }
+                            
+                            moved = true;
+                        } else {
+                            // 移动方块
+                            if (positions.farthest.x !== x || positions.farthest.y !== y) {
+                                this.grid[positions.farthest.x][positions.farthest.y] = tile;
+                                this.grid[x][y] = null;
+                                moved = true;
+                            }
+                        }
+                    }
+                });
+            });
+            
+            if (moved) {
+                this.addRandomTile();
+                this.renderGrid();
+                
+                if (!this.movesAvailable()) {
+                    this.over = true;
+                    this.showMessage(false);
+                }
+            }
+        }
+        
+        // 添加新方法：标记所有方块为非新方块
+        markTilesOld() {
+            for (let x = 0; x < this.gridSize; x++) {
+                for (let y = 0; y < this.gridSize; y++) {
+                    if (this.grid[x][y]) {
+                        this.grid[x][y].isNew = false;
+                    }
                 }
             }
         }
@@ -369,29 +502,6 @@ document.addEventListener('DOMContentLoaded', function() {
             ];
             
             return vectors[direction];
-        }
-        
-        // 渲染网格
-        renderGrid() {
-            this.clearTiles();
-            
-            for (let x = 0; x < this.gridSize; x++) {
-                for (let y = 0; y < this.gridSize; y++) {
-                    const tile = this.grid[x][y];
-                    
-                    if (tile) {
-                        const element = document.createElement('div');
-                        element.classList.add('tile', `tile-${tile.value}`);
-                        if (tile.merged) {
-                            element.classList.add('tile-merged');
-                        }
-                        element.style.top = `${this.getTilePosition(x)}px`;
-                        element.style.left = `${this.getTilePosition(y)}px`;
-                        
-                        this.tileContainer.appendChild(element);
-                    }
-                }
-            }
         }
         
         // 显示游戏消息

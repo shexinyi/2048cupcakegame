@@ -107,6 +107,12 @@ main {
     left: 15px;
 }
 
+.prevent-select {
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
 .tile {
     position: absolute;
     width: calc(25% - 15px);  /* 修改宽度计算 */
@@ -115,7 +121,8 @@ main {
     background-position: center;
     background-repeat: no-repeat;
     border-radius: 3px;
-    transition: transform 0.15s ease, opacity 0.15s ease;
+    transition: all 0.15s ease-in-out; /* 修改transition属性 */
+    will-change: transform; /* 添加性能优化 */
 }
 
 .tile-2 {
