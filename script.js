@@ -86,6 +86,14 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         // 添加方块元素到DOM
+        // 修改getTilePosition方法
+        getTilePosition(pos) {
+            const cellSize = this.getCellSize();
+            const gap = 15; // 间隙大小
+            return pos * (cellSize + gap); // 移除额外的15px偏移
+        }
+        
+        // 修改addTileElement方法
         addTileElement(tile) {
             const element = document.createElement('div');
             element.classList.add('tile', `tile-${tile.value}`);
@@ -94,13 +102,6 @@ document.addEventListener('DOMContentLoaded', function() {
             element.style.left = `${this.getTilePosition(tile.y)}px`;
             
             this.tileContainer.appendChild(element);
-        }
-        
-        // 获取方块位置
-        getTilePosition(pos) {
-            const cellSize = this.getCellSize();
-            const gap = 15; // 间隙大小
-            return pos * (cellSize + gap) + 15; // 15是容器的内边距
         }
         
         // 获取单元格大小

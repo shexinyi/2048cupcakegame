@@ -80,16 +80,14 @@ main {
     z-index: 1;
     width: calc(100% - 30px);
     height: calc(100% - 30px);
+    display: flex;
+    flex-direction: column;
 }
 
 .grid-row {
     display: flex;
     height: 25%;
     margin-bottom: 15px;
-}
-
-.grid-row:last-child {
-    margin-bottom: 0;
 }
 
 .grid-cell {
@@ -100,28 +98,23 @@ main {
     border-radius: 3px;
 }
 
-.grid-cell:last-child {
-    margin-right: 0;
-}
-
 .tile-container {
     position: absolute;
     z-index: 2;
     width: calc(100% - 30px);
     height: calc(100% - 30px);
+    top: 15px;
+    left: 15px;
 }
 
 .tile {
     position: absolute;
-    width: calc(25% - 15px * 3/4);
-    height: calc(25% - 15px * 3/4);
-    background-size: cover;
+    width: calc(25% - 15px);  /* 修改宽度计算 */
+    height: calc(25% - 15px); /* 修改高度计算 */
+    background-size: 90%;     /* 调整图片大小 */
     background-position: center;
+    background-repeat: no-repeat;
     border-radius: 3px;
-    font-size: 35px;
-    font-weight: bold;
-    text-align: center;
-    line-height: 107px;
     transition: transform 0.15s ease, opacity 0.15s ease;
 }
 
