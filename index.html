@@ -35,25 +35,25 @@
 </head>
 <body>
     <header>
-        <h1>2048 Cupcake Game1</h1>
+        <h1>2048 Cupcake Game</h1>
         <div class="score-container">
             <div class="score-box">
-                <span class="score-label">分数</span>
+                <span class="score-label">Score</span>
                 <span id="score">0</span>
             </div>
             <div class="score-box">
-                <span class="score-label">最高分</span>
+                <span class="score-label">Best</span>
                 <span id="best-score">0</span>
             </div>
         </div>
     </header>
 
     <main>
-        <div class="game-container">
+        <div class="game-container prevent-select">
             <div class="game-message">
                 <p></p>
                 <div class="lower">
-                    <a class="retry-button">再来一次</a>
+                    <a class="retry-button">Try Again</a>
                 </div>
             </div>
             <div class="grid-container">
@@ -86,21 +86,21 @@
         </div>
 
         <div class="game-controls">
-            <button id="new-game-button">新游戏</button>
-            <button id="how-to-play-button">游戏说明</button>
+            <button id="new-game-button">New Game</button>
+            <button id="how-to-play-button">How to Play</button>
         </div>
 
         <div class="how-to-play">
-            <h2>如何玩 2048 Cupcake Game</h2>
-            <p>使用 <strong>方向键</strong> 或 <strong>滑动</strong>（在移动设备上）移动纸杯蛋糕。</p>
-            <p>当两个相同的纸杯蛋糕碰到一起时，它们会合并成一个更美味的纸杯蛋糕！</p>
-            <p>合并纸杯蛋糕，尝试创建终极的2048纸杯蛋糕！</p>
+            <h2>How to Play 2048 Cupcake Game</h2>
+            <p>Use <strong>arrow keys</strong> or <strong>swipe</strong> (on mobile devices) to move the cupcakes.</p>
+            <p>When two identical cupcakes touch, they merge into a more delicious cupcake!</p>
+            <p>Merge cupcakes and try to create the ultimate 2048 cupcake!</p>
         </div>
     </main>
 
     <footer>
-        <p>&copy; 2023 <a href="https://2048cupcakegame.xyz">2048cupcakegame.xyz</a> - 所有权利保留</p>
-        <p>一个美味的2048游戏版本，充满了甜蜜的纸杯蛋糕！</p>
+        <p>&copy; 2023 <a href="https://2048cupcakegame.xyz">2048cupcakegame.xyz</a> - All Rights Reserved</p>
+        <p>A delicious version of 2048, filled with sweet cupcakes!</p>
     </footer>
 
     <script src="script.js"></script>
