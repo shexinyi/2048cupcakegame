@@ -49,8 +49,8 @@ header {
     background: #bbada0;
     padding: 15px 25px;
     font-size: 25px;
-    height: 25px;
-    line-height: 25px;
+    height: 38px;
+    line-height: 35px;
     font-weight: bold;
     border-radius: 3px;
     color: white;
@@ -344,4 +344,14 @@ footer a {
         line-height: 40px;
         margin-top: 130px;
     }
+}
+
+#score,
+#best-score {
+    position: relative;
+    display: block;
+    text-align: center;
+    font-weight: bold;
+    padding-bottom: 5px;
+    margin-top: -5px;
 } 
