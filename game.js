@@ -1,9 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Game constants
     const GRID_SIZE = 4;
-    const CELL_SIZE = 106.25;
-    const CELL_GAP = 15;
-
+    
     // DOM Elements
     const gameContainer = document.querySelector('.game-container');
     const tileContainer = document.querySelector('.tile-container');
@@ -79,8 +77,16 @@ document.addEventListener('DOMContentLoaded', function() {
             // Create DOM element for the tile
             const tile = document.createElement('div');
             tile.className = 'tile tile-' + value + ' tile-new';
-            tile.style.left = (cell.y * (CELL_SIZE + CELL_GAP)) + 'px';
-            tile.style.top = (cell.x * (CELL_SIZE + CELL_GAP)) + 'px';
+            
+            // Add data attributes to track position
+            tile.setAttribute('data-row', cell.x);
+            tile.setAttribute('data-col', cell.y);
+            
+            // Use calculated position
+            const position = calculatePosition(cell.x, cell.y);
+            tile.style.left = position.left;
+            tile.style.top = position.top;
+            
             tileContainer.appendChild(tile);
         }
     }
@@ -208,8 +214,16 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (grid[i][j] !== 0) {
                         const tile = document.createElement('div');
                         tile.className = 'tile tile-' + grid[i][j];
-                        tile.style.left = (j * (CELL_SIZE + CELL_GAP)) + 'px';
-                        tile.style.top = (i * (CELL_SIZE + CELL_GAP)) + 'px';
+                        
+                        // Add data attributes to track position
+                        tile.setAttribute('data-row', i);
+                        tile.setAttribute('data-col', j);
+                        
+                        // Use calculated position
+                        const position = calculatePosition(i, j);
+                        tile.style.left = position.left;
+                        tile.style.top = position.top;
+                        
                         tileContainer.appendChild(tile);
                         
                         // Check for win
@@ -292,22 +306,39 @@ document.addEventListener('DOMContentLoaded', function() {
     // Handle touch events for mobile play
     let touchStartX, touchStartY;
     let touchEndX, touchEndY;
+    let isTouching = false;
 
     gameContainer.addEventListener('touchstart', function(event) {
+        if (event.touches.length > 1 || isTouching) return;
+        
+        isTouching = true;
         touchStartX = event.touches[0].clientX;
         touchStartY = event.touches[0].clientY;
-    });
+        event.preventDefault();
+    }, { passive: false });
 
     gameContainer.addEventListener('touchmove', function(event) {
+        if (!isTouching) return;
         event.preventDefault();
     }, { passive: false });
 
     gameContainer.addEventListener('touchend', function(event) {
+        if (!isTouching) return;
+        
         touchEndX = event.changedTouches[0].clientX;
         touchEndY = event.changedTouches[0].clientY;
         
         const dx = touchEndX - touchStartX;
         const dy = touchEndY - touchStartY;
+        
+        isTouching = false;
+        
+        // Minimum swipe distance to trigger a move (10px)
+        const minSwipeDistance = 10;
+        
+        if (Math.abs(dx) < minSwipeDistance && Math.abs(dy) < minSwipeDistance) {
+            return; // Ignore small movements
+        }
         
         // Determine the direction of the swipe
         if (Math.abs(dx) > Math.abs(dy)) {
@@ -325,11 +356,63 @@ document.addEventListener('DOMContentLoaded', function() {
                 moveTiles('up');
             }
         }
-    });
+        
+        event.preventDefault();
+    }, { passive: false });
 
     // Restart button event listener
     restartButton.addEventListener('click', initGame);
     retryButton.addEventListener('click', initGame);
+
+    // Calculate position for tiles based on current container size
+    function calculatePosition(row, col) {
+        // Define the grid layout
+        const positions = {
+            0: 0,
+            1: 25.5, // 23% tile width + 2.5% gap
+            2: 51,   // 2 * (23% tile width + 2.5% gap)
+            3: 76.5  // 3 * (23% tile width + 2.5% gap)
+        };
+        
+        // Return position as percentages
+        return { 
+            left: positions[col] + '%', 
+            top: positions[row] + '%' 
+        };
+    }
+
+    // Handle window resize and orientation changes
+    window.addEventListener('resize', function() {
+        setTimeout(updateTilePositions, 50);
+    });
+
+    window.addEventListener('orientationchange', function() {
+        // Hide the game container during orientation change to prevent visual glitches
+        gameContainer.style.opacity = '0';
+        
+        // Wait for orientation change to complete
+        setTimeout(function() {
+            updateTilePositions();
+            // Show the game container after positions are updated
+            gameContainer.style.opacity = '1';
+        }, 200);
+    });
+
+    function updateTilePositions() {
+        const tiles = document.querySelectorAll('.tile');
+        if (!tiles.length) return;
+        
+        tiles.forEach(tile => {
+            const tileRow = parseInt(tile.getAttribute('data-row'));
+            const tileCol = parseInt(tile.getAttribute('data-col'));
+            
+            if (!isNaN(tileRow) && !isNaN(tileCol)) {
+                const position = calculatePosition(tileRow, tileCol);
+                tile.style.left = position.left;
+                tile.style.top = position.top;
+            }
+        });
+    }
 
     // Initialize the game when the page loads
     initGame();
