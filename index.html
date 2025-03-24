@@ -1,61 +1,55 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Play the delicious 2048 Cupcake Game online! Combine cupcakes to reach the ultimate 2048 cupcake. Free to play on 2048cupcakegame.xyz">
-    <meta name="keywords" content="2048 cupcake game, cupcake game, 2048 game, puzzle game, online game, free game">
-    <title>2048 Cupcake Game - Combine Delicious Cupcakes | 2048cupcakegame.xyz</title>
+    <meta name="description" content="Play the delicious 2048 cupcake game online. Combine cupcakes to reach the ultimate 2048 cupcake!">
+    <meta name="keywords" content="2048 cupcake game, cupcake game, 2048 game, online puzzle game, free browser game">
+    <title>2048 Cupcake Game - Combine Cupcakes in this Addictive Puzzle Game</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
-    <!-- Open Graph tags for social sharing -->
-    <meta property="og:title" content="2048 Cupcake Game - Sweet Puzzle Challenge">
-    <meta property="og:description" content="Play the delicious 2048 Cupcake Game online! Combine cupcakes to reach the ultimate 2048 cupcake.">
-    <meta property="og:image" content="https://2048cupcakegame.xyz/images/og-image.jpg">
-    <meta property="og:url" content="https://2048cupcakegame.xyz">
+    <link rel="icon" href="images/cupcake-16.png" type="image/png">
+    <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <!-- Structured data for rich snippets -->
-    <script type="application/ld+json">
-    {
-        "@context": "http://schema.org",
-        "@type": "Game",
-        "name": "2048 Cupcake Game",
-        "description": "A delicious version of the classic 2048 game featuring cupcakes. Combine identical cupcakes to create even more delicious treats!",
-        "url": "https://2048cupcakegame.xyz",
-        "image": "https://2048cupcakegame.xyz/images/og-image.jpg",
-        "genre": ["Puzzle", "Strategy", "Casual"],
-        "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "USD",
-            "availability": "http://schema.org/InStock"
-        }
-    }
-    </script>
+    <meta property="og:url" content="https://2048cupcakegame.xyz/">
+    <meta property="og:title" content="2048 Cupcake Game">
+    <meta property="og:description" content="Play the delicious 2048 cupcake game online. Combine cupcakes to reach the ultimate 2048 cupcake!">
+    <meta property="og:image" content="https://2048cupcakegame.xyz/images/cupcake-512.png">
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://2048cupcakegame.xyz/">
+    <meta property="twitter:title" content="2048 Cupcake Game">
+    <meta property="twitter:description" content="Play the delicious 2048 cupcake game online. Combine cupcakes to reach the ultimate 2048 cupcake!">
+    <meta property="twitter:image" content="https://2048cupcakegame.xyz/images/cupcake-512.png">
 </head>
 <body>
-    <header>
-        <h1>2048 Cupcake Game</h1>
-        <div class="score-container">
-            <div class="score-box">
-                <span class="score-label">Score</span>
-                <span id="score">0</span>
+    <div class="container">
+        <header>
+            <h1>2048 Cupcake Game</h1>
+            <div class="scores-container">
+                <div class="score-container">
+                    <div class="score-title">SCORE</div>
+                    <div id="score">0</div>
+                </div>
+                <div class="best-container">
+                    <div class="score-title">BEST</div>
+                    <div id="best-score">0</div>
+                </div>
             </div>
-            <div class="score-box">
-                <span class="score-label">Best</span>
-                <span id="best-score">0</span>
-            </div>
-        </div>
-    </header>
+        </header>
 
-    <main>
-        <div class="game-container prevent-select">
+        <div class="above-game">
+            <p class="game-intro">Join cupcakes and get to the <strong>2048 cupcake!</strong></p>
+            <a class="restart-button" id="restart-game">New Game</a>
+        </div>
+
+        <div class="game-container">
             <div class="game-message">
                 <p></p>
                 <div class="lower">
-                    <a class="retry-button">Try Again</a>
+                    <a class="retry-button">Try again</a>
                 </div>
             </div>
+
             <div class="grid-container">
                 <div class="grid-row">
                     <div class="grid-cell"></div>
@@ -82,27 +76,20 @@
                     <div class="grid-cell"></div>
                 </div>
             </div>
+
             <div class="tile-container"></div>
         </div>
 
-        <div class="game-controls">
-            <button id="new-game-button">New Game</button>
-            <button id="how-to-play-button">How to Play</button>
+        <div class="game-explanation">
+            <p><strong>How to play:</strong> Use your <strong>arrow keys</strong> to move the cupcakes. When two cupcakes with the same number touch, they <strong>merge into one!</strong></p>
+            <p>Start with small cupcakes and work your way up to create the ultimate 2048 cupcake masterpiece!</p>
         </div>
-
-        <div class="how-to-play">
-            <h2>How to Play 2048 Cupcake Game</h2>
-            <p>Use <strong>arrow keys</strong> or <strong>swipe</strong> (on mobile devices) to move the cupcakes.</p>
-            <p>When two identical cupcakes touch, they merge into a more delicious cupcake!</p>
-            <p>Merge cupcakes and try to create the ultimate 2048 cupcake!</p>
-        </div>
-    </main>
+    </div>
 
     <footer>
-        <p>&copy; 2023 <a href="https://2048cupcakegame.xyz">2048cupcakegame.xyz</a> - All Rights Reserved</p>
-        <p>A delicious version of 2048, filled with sweet cupcakes!</p>
+        <p>Created for <a href="https://2048cupcakegame.xyz">2048cupcakegame.xyz</a> - A delicious twist on the classic 2048 game</p>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="game.js"></script>
 </body>
 </html>
