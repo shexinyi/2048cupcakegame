@@ -24,18 +24,22 @@ h1 {
     font-size: 60px;
     font-weight: bold;
     margin: 0;
-    display: block;
-    float: left;
+    flex: 1;
 }
 
 header {
     margin-bottom: 20px;
-    overflow: auto;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .scores-container {
-    float: right;
-    text-align: right;
+    display: flex;
+    align-items: center;
+    height: auto;
+    overflow: visible;
 }
 
 .score-container,
@@ -45,8 +49,8 @@ header {
     background: #bbada0;
     padding: 15px 25px;
     font-size: 25px;
-    height: 50px;
-    line-height: 45px;
+    height: 25px;
+    line-height: 25px;
     font-weight: bold;
     border-radius: 3px;
     color: white;
